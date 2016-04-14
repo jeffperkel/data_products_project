@@ -96,32 +96,26 @@
 <li>SKU: The name of the item to be sold in</li>
 <li>COGS: Cost of goods sold for each respective SKU</li>
 <li>DIR_LIST: List price of each respective SKU when sold direct to a retailer</li>
-<li>DIST_LIST: List price of each respective SKU when sold to a distributor
-Example using dummied data (note in any real business case COGS will be less than DIR_LIST or DIST_LIST:</li>
+<li>DIST_LIST: List price of each respective SKU when sold to a distributor</li>
 </ul>
 
-<pre><code>##    SKU  COGS DIR_LIST DIST_LIST
-## 1 SKU1 8.460    21.15     11.83
-## 2 SKU2 8.608    21.52     17.69
+<p>Example using dummied data (note in any real business case COGS will be less than DIR_LIST or DIST_LIST:</p>
+
+<pre><code>##    SKU COGS DIR_LIST DIST_LIST
+## 1 SKU1 8.46    21.15     11.83
 </code></pre>
 
 <p>Two additional Variables are calculated by the app:</p>
 
 <ul>
 <li>DIST_GM: Distributor Gross Margin defined by DIST_LIST - COGS</li>
-<li>DIR_GM: Direct Gross Margin defined by DIR_LIST - COGS</li>
+<li>DIR_GM: Direct Gross Margin defined by DIR_LIST - COGS
+--- .class #id </li>
 </ul>
 
-  </article>
-  <!-- Presenter Notes -->
-</slide>
+<h2>App Calculations</h2>
 
-<slide class="class" id="id" style="background:;">
-  <hgroup>
-    <h2>App Calculations</h2>
-  </hgroup>
-  <article data-timings="">
-    <p>End user will be able to evaluate the profitability of up to 5 SKUS at a time.  Store counts, velocities, and slotting cost estimates will be entered in each input box.  Results will calculate live.</p>
+<p>End user will be able to evaluate the profitability of up to 5 SKUS at a time.  Store counts, velocities, and slotting cost estimates will be entered in each input box.  Results will calculate live.</p>
 
 <p>For each SKU, weeks to payback is equal to: (Slotting Costs/(Store Counts * Velocities in CS/S/W * Distributor or Direct Gross Margin)) Output is rounded to 2 signficant figures.</p>
 
@@ -148,7 +142,7 @@ Example using dummied data (note in any real business case COGS will be less tha
   <article data-timings="">
     <p>Screenshot below shows ease of calculating payback given reasonable input assumptions applied against dummied data.</p>
 
-<p><img src="assets/img/Output.png" alt="Example Output"></p>
+<p><img src="assets/img/output.png" alt="Example Output"></p>
 
   </article>
   <!-- Presenter Notes -->
@@ -178,14 +172,8 @@ Example using dummied data (note in any real business case COGS will be less tha
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=4 title='App Calculations'>
+        data-slide=4 title='Example Output'>
          4
-      </a>
-    </li>
-    <li>
-      <a href="#" target="_self" rel='tooltip' 
-        data-slide=5 title='Example Output'>
-         5
       </a>
     </li>
   </ul>
