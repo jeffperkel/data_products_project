@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Data Products Project</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Data Products Project">
+  <meta name="author" content="Jeff Perkel">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/ribbons.css"></link>
+
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="libraries/frameworks/io2012/js/slides" 
+    src="libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h1>Data Products Project</h1>
+    <h2>Shiny App Pitch Deck - Slotting Payback Calculator</h2>
+    <p>Jeff Perkel<br/>Coursera Class</p>
+  </hgroup>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <hgroup>
+    <h2>Purpose of this app</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>This app enables the profitable sell-in of new items to a given retailer by providing field sales professionals an understanding of weeks until slotting spend is paid back.</p>
+
+<ul>
+<li>End User Audience: Field Sales</li>
+<li>App Owner: Analytics Department</li>
+<li>Back-end Inputs Required: SKU level pricing (Finance), SKU level COGS (Finance/Operations)</li>
+<li>End User Inputs Required: Store Count Estimate (Field Sales), Velocity Estimates in CS/S/W (Field Sales), Slotting Cost (Field Sales), Distributor or Direct Account (Field Sales) </li>
+</ul>
+
+<p>Design enables Field Sales, who may not have strong analytic or financial skill-sets, to quickly see time to payback metric without clear visibility to sensitive inputs (e.g., Gross Margin/COGS) </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>What is Slotting, and Why is Payback Important?</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Slotting is the fee that retailers charge manufacturers for new item placement.</p>
+
+<ul>
+<li>Can be paid in cash or free product</li>
+<li>Is usually negotiable but is a critical component to a retailer&#39;s P&amp;L</li>
+</ul>
+
+<p>Before a manufacturer makes a material investment in item placement, financial implications should be clear.</p>
+
+<ul>
+<li>Time to payback, in this instance is defined as the number of weeks of sales until gross margin realized equals slotting spend </li>
+<li>Internal payback timing hurdles should be established cross-functionally</li>
+<li>Field Sales should be able to clearly lay out business case for investment</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>App Setup Parameters</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Input data is a .csv file with 4 variables: </p>
+
+<ul>
+<li>SKU: The name of the item to be sold in</li>
+<li>COGS: Cost of goods sold for each respective SKU</li>
+<li>DIR_LIST: List price of each respective SKU when sold direct to a retailer</li>
+<li>DIST_LIST: List price of each respective SKU when sold to a distributor
+Example using dummied data (note in any real business case COGS will be less than DIR_LIST or DIST_LIST:</li>
+</ul>
+
+<pre><code>##    SKU  COGS DIR_LIST DIST_LIST
+## 1 SKU1 8.460    21.15     11.83
+## 2 SKU2 8.608    21.52     17.69
+</code></pre>
+
+<p>Two additional Variables are calculated by the app:</p>
+
+<ul>
+<li>DIST_GM: Distributor Gross Margin defined by DIST_LIST - COGS</li>
+<li>DIR_GM: Direct Gross Margin defined by DIR_LIST - COGS</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>App Calculations</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>End user will be able to evaluate the profitability of up to 5 SKUS at a time.  Store counts, velocities, and slotting cost estimates will be entered in each input box.  Results will calculate live.</p>
+
+<p>For each SKU, weeks to payback is equal to: (Slotting Costs/(Store Counts * Velocities in CS/S/W * Distributor or Direct Gross Margin)) Output is rounded to 2 signficant figures.</p>
+
+<p>See code example for 1 SKU below:</p>
+
+<pre><code class="r">ifelse(({
+    input$Pricing
+}) == 1, paste(&quot;Your estimated weeks to payback on&quot;, input$SKU1, 
+    &quot;are:&quot;, signif(input$Cost1/(appdata$DIST_GM[which(appdata$SKU == 
+        input$SKU1)] * input$Store1 * input$Velocity1), digits = 2)), 
+    paste(&quot;Your estimated weeks to payback on&quot;, input$SKU1, &quot;are:&quot;, 
+        signif(input$Cost1/(appdata$DIR_GM[which(appdata$SKU == 
+            input$SKU1)] * input$Store1 * input$Velocity1), digits = 2)))
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>Example Output</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Screenshot below shows ease of calculating payback given reasonable input assumptions applied against dummied data.</p>
+
+<p><img src="assets/img/Output.png" alt="Example Output"></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='Purpose of this app'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='What is Slotting, and Why is Payback Important?'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='App Setup Parameters'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='App Calculations'>
+         4
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=5 title='Example Output'>
+         5
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>
